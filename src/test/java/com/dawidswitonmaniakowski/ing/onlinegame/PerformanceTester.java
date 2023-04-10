@@ -1,13 +1,13 @@
 package com.dawidswitonmaniakowski.ing.onlinegame;
 
+import com.dawidswitonmaniakowski.ing.Statistics;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,55 +17,89 @@ class PerformanceTester {
     Random r = new Random();
 
     @Test
-    void speedTest() {
-        int w1 = 0;
-        int wo = 0;
+    void checkCorrectness() {
+        for (int z = 0; z < 10; z++) {
+            LinkedList<Clan> clans = new LinkedList<>();
+            LinkedList<Clan> clans2 = new LinkedList<>();
 
-        for(int z =0; z < 40; z++){
-        LinkedList<Clan> clans = new LinkedList<>();
-        LinkedList<Clan> clans2 = new LinkedList<>();
-        LinkedList<Clan> clans3 = new LinkedList<>();
+            int numOfPlayersMax = 100;
+            int maxPoints = 1000;
 
-        int numOfPlayersMax = 50;
-        int maxPoints = 1000;
+            int numOfClans = 1000;
+            for (int i = 0; i < numOfClans; i++) {
+                Clan c = new Clan(generateNumber(numOfPlayersMax), generateNumber(maxPoints));
+                clans.add(c);
+                clans2.add(c);
+            }
 
-        int numOfClans = 20000;
-        for (int i = 0; i < numOfClans; i++) {
-            Clan clan = new Clan(generateNumber(numOfPlayersMax), generateNumber(maxPoints));
-            clans.add(clan);
-            clans2.add(clan);
-            clans3.add(clan);
+            GroupCollector collector = new GroupCollector(clans, numOfPlayersMax);
+            List<List<Clan>> lists = collector.executeProcessing();
+
+            GroupCollectorCorrect correct = new GroupCollectorCorrect(clans2, numOfPlayersMax);
+            List<List<Clan>> expected = correct.executeProcessing();
+
+            assertThat(lists).isEqualTo(expected);
+
         }
 
+    }
 
-        int groupCount = numOfPlayersMax;
+    @Test
+    @Disabled("only performance testing")
+    void speedTest() {
+        List<Long> times = new ArrayList<>();
+
+        for (int z = 0; z < 100; z++) {
+            LinkedList<Clan> clans = new LinkedList<>();
+
+            int numOfPlayersMax = generateNumber(1000);
+            int maxPoints = generateNumber(100000);
+
+            int numOfClans = generateNumber(20000);
+            for (int i = 0; i < numOfClans; i++) {
+                Clan clan = new Clan(generateNumber(numOfPlayersMax), generateNumber(maxPoints));
+                clans.add(clan);
+            }
 
             Instant start = Instant.now();
-            GroupCollector collector = new GroupCollector(clans, groupCount);
-            List<List<Clan>> response = collector.executeProcessing();
+            GroupCollector collector = new GroupCollector(clans, numOfPlayersMax);
+            collector.executeProcessing();
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
 
-        Instant starto = Instant.now();
-        GroupCollectorNoOptimization collectoro = new GroupCollectorNoOptimization(clans3, groupCount);
-        List<List<Clan>> responseo = collectoro.executeProcessing();
-        Instant finisho = Instant.now();
-        long timeElapsedo = Duration.between(starto, finisho).toMillis();
-
-
-
-
-
-        log.info("t1: " + timeElapsed + "to: " + timeElapsedo);
-
-        if(timeElapsed > timeElapsedo) {
-            wo++;
-        }else if(timeElapsed < timeElapsedo) {
-            w1++;
+            times.add(timeElapsed);
+            log.info("time: " + timeElapsed);
         }
-        //assertThat(response).isEqualTo(responseo);
+        Statistics.statistics(times);
+    }
+
+    @Test
+    @Disabled("only performance testing")
+    void speedTest2() {
+        List<Long> times = new ArrayList<>();
+
+        for (int z = 0; z < 40; z++) {
+            LinkedList<Clan> clans = new LinkedList<>();
+
+            int numOfPlayersMax = 1000;
+            int maxPoints = 100000;
+
+            int numOfClans = 20000;
+            for (int i = 0; i < numOfClans; i++) {
+                Clan clan = new Clan(generateNumber(numOfPlayersMax), generateNumber(maxPoints));
+                clans.add(clan);
+            }
+
+            Instant start = Instant.now();
+            GroupCollectorNoOptimization collector = new GroupCollectorNoOptimization(clans, numOfPlayersMax);
+            collector.executeProcessing();
+            Instant finish = Instant.now();
+            long timeElapsed = Duration.between(start, finish).toMillis();
+
+            times.add(timeElapsed);
+            log.info("time: " + timeElapsed);
         }
-        log.info("w1: " + w1 + " wo: " + wo);
+        Statistics.statistics(times);
     }
 
     private int generateNumber(int max) {

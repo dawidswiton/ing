@@ -9,7 +9,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 
 @AllArgsConstructor
-class GroupCollectorDeprecated {
+class GroupCollectorCorrect {
 
     private LinkedList<Clan> clans;
     private int groupCount;

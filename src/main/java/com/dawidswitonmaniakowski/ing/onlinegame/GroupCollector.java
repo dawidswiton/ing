@@ -13,7 +13,7 @@ class GroupCollector {
     private int groupCount;
 
     private final List<List<Clan>> response = new LinkedList<>();
-    private final List<List<Clan>> forAnalyze = new LinkedList<>();
+    private final LinkedList<ListWithCountedPlayers> forAnalyze = new LinkedList<>();
 
     List<List<Clan>> executeProcessing() {
 
@@ -33,8 +33,8 @@ class GroupCollector {
     private void placeInResult(Clan clan) {
         List<Clan> forRemove = null;
 
-        for(List<Clan> clans : forAnalyze) {
-            int countPlayers = ((ListWithCountedPlayers) clans).getPlayers();
+        for(ListWithCountedPlayers clans : forAnalyze) {
+            int countPlayers = clans.getPlayers();
             if(groupCount - countPlayers >= clan.getNumberOfPlayers()){
                 clans.add(clan);
                 if(countPlayers + clan.getNumberOfPlayers() == groupCount){
@@ -54,6 +54,8 @@ class GroupCollector {
         ListWithCountedPlayers group = new ListWithCountedPlayers();
         group.add(clan);
         response.add(group);
-        forAnalyze.add(group);
+        if(group.getPlayers() < groupCount) {
+            forAnalyze.add(group);
+        }
     }
 }
