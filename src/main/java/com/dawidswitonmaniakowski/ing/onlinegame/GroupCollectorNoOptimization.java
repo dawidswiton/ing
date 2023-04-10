@@ -2,18 +2,17 @@ package com.dawidswitonmaniakowski.ing.onlinegame;
 
 import lombok.AllArgsConstructor;
 
-import java.util.*;
-
-import static java.util.Objects.isNull;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 @AllArgsConstructor
-class GroupCollector {
+class GroupCollectorNoOptimization {
 
     private LinkedList<Clan> clans;
     private int groupCount;
 
     private final List<List<Clan>> response = new LinkedList<>();
-    private final List<List<Clan>> forAnalyze = new LinkedList<>();
 
     List<List<Clan>> executeProcessing() {
 
@@ -31,22 +30,13 @@ class GroupCollector {
     }
 
     private void placeInResult(Clan clan) {
-        List<Clan> forRemove = null;
 
-        for(List<Clan> clans : forAnalyze) {
+        for(List<Clan> clans : response) {
             int countPlayers = ((ListWithCountedPlayers) clans).getPlayers();
             if(groupCount - countPlayers >= clan.getNumberOfPlayers()){
                 clans.add(clan);
-                if(countPlayers + clan.getNumberOfPlayers() == groupCount){
-                    forRemove = clans;
-                    break;
-                }
                 return;
             }
-        }
-        if(!isNull(forRemove)){
-            forAnalyze.remove(forRemove);
-            return;
         }
         addNewGroup(clan);
     }
@@ -54,6 +44,5 @@ class GroupCollector {
         ListWithCountedPlayers group = new ListWithCountedPlayers();
         group.add(clan);
         response.add(group);
-        forAnalyze.add(group);
     }
 }
