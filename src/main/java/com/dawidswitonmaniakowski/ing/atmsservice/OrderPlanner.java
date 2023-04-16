@@ -1,4 +1,4 @@
-package atmsservice;
+package com.dawidswitonmaniakowski.ing.atmsservice;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

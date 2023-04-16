@@ -1,4 +1,4 @@
-package atmsservice;
+package com.dawidswitonmaniakowski.ing.atmsservice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,18 +11,18 @@ final class ServiceTask {
 
     @Getter
     @Setter
-    private final int region;
+    private int region;
 
     private ServiceRequestType requestType;
 
     @Getter
     @Setter
-    private final int atmId;
+    private int atmId;
 
     @Getter
     @Setter
     @JsonIgnore
-    private int index = 0;
+    private int index;
 
     @JsonProperty
     void setRequestType(ServiceRequestType requestType) {

@@ -1,4 +1,4 @@
-package atmsservice;
+package com.dawidswitonmaniakowski.ing.atmsservice;
 
 public enum ServiceRequestType {
     FAILURE_RESTART,

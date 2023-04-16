@@ -1,4 +1,4 @@
-package atmsservice;
+package com.dawidswitonmaniakowski.ing.atmsservice;
 
 import java.util.*;
 import java.util.stream.Collectors;
