@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class Transaction {
+class BankTrans {
 
     @JsonProperty("debitAccount")
     @Size(min = 26, max = 26)

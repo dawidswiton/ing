@@ -26,7 +26,7 @@ class PerformanceTesterTest {
 
         for (int z = 0; z < 100; z++) {
 
-            List<Transaction> transactions = new ArrayList<>();
+            List<BankTrans> transactions = new ArrayList<>();
             int numberOfTransactions = 100000; //generateNumber(100000);
             int numberOfDifferentAccounts = generateNumber(10000);
             generateAccounts(numberOfDifferentAccounts);
@@ -36,7 +36,7 @@ class PerformanceTesterTest {
                 String credit = generateCreditAccountNumber(numberOfDifferentAccounts,debit);
                 BigDecimal amount = generateRandomAmount(1000000);
                 transactions.add(
-                        new Transaction(
+                        new BankTrans(
                                 debit,
                                 credit,
                                 amount
@@ -46,7 +46,7 @@ class PerformanceTesterTest {
             Instant start = Instant.now();
             //main execution
             ReportGeneratorImpl impl = new ReportGeneratorImpl();
-            impl.generate(transactions.toArray(new Transaction[transactions.size()]));
+            impl.generate(transactions.toArray(new BankTrans[transactions.size()]));
 
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();

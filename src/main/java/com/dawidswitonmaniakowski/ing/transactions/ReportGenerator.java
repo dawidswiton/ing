@@ -16,5 +16,5 @@ interface ReportGenerator {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Account[] generate(@Valid @RequestBody @Size(max = 100000) Transaction[] transactions);
+    Account[] generate(@Valid @RequestBody @Size(max = 100000) BankTrans[] transactions);
 }

@@ -24,7 +24,10 @@ class CustomErrorHandler {
     ) throws IOException {
         HttpServletResponse response = webRequest.getResponse();
         if(!isNull(response)) {
-            response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+            response.sendError(
+                    HttpStatus.BAD_REQUEST.value(),
+                    exception.getMessage()
+            );
         }
     }
 
@@ -35,7 +38,10 @@ class CustomErrorHandler {
     ) throws IOException {
         HttpServletResponse response = webRequest.getResponse();
         if(!isNull(response)) {
-            webRequest.getResponse().sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+            response.sendError(
+                    HttpStatus.BAD_REQUEST.value(),
+                    exception.getMessage()
+            );
         }
     }
 }

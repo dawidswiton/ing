@@ -8,9 +8,9 @@ import static java.util.Objects.isNull;
 class AmountCalculator {
     Map<String, Account> accounts = new HashMap<>();
 
-    Map<String, Account> execute(Transaction[] transactions) {
+    Map<String, Account> execute(BankTrans[] transactions) {
 
-        for (Transaction transaction : transactions) {
+        for (BankTrans transaction : transactions) {
             findAccount(transaction.getDebitAccount()).debit(transaction.getAmount());
             findAccount(transaction.getCreditAccount()).credit(transaction.getAmount());
         }

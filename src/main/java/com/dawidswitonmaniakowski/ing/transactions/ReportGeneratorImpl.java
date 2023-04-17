@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 @RestController
 class ReportGeneratorImpl implements ReportGenerator {
     @Override
-    public Account[] generate(Transaction[] transactions) {
+    public Account[] generate(BankTrans[] transactions) {
 
         AmountCalculator calculator = new AmountCalculator();
         Map<String, Account> calculatedAmount = calculator.execute(transactions);
