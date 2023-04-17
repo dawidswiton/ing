@@ -82,12 +82,6 @@ class ReportGeneratorTest {
         ObjectMapper mapper = mapperBuilder.build();
         AccountTestHelper[] resultResponse = mapper.readValue(expected, AccountTestHelper[].class);
         AccountTestHelper[] expectedResponse = mapper.readValue(response, AccountTestHelper[].class);
-
-        for(int i = 0; i < resultResponse.length; i++) {
-            assertThat(resultResponse[i].getAccount()).isEqualTo(expectedResponse[i].getAccount());
-            assertThat(resultResponse[i].getCreditCount()).isEqualTo(expectedResponse[i].getCreditCount());
-            assertThat(resultResponse[i].getDebitCount()).isEqualTo(expectedResponse[i].getDebitCount());
-            assertThat(resultResponse[i].getBalance()).isEqualTo(expectedResponse[i].getBalance());
-        }
+        assertThat(resultResponse).isEqualTo(expectedResponse);
     }
 }
