@@ -1,6 +1,5 @@
 package com.dawidswitonmaniakowski.ing.transactions;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.Size;
