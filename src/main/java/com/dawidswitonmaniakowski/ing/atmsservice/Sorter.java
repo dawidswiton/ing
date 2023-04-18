@@ -10,7 +10,11 @@ class Sorter {
     private int lastRegion = -1;
 
     List<ServiceTask> plan(List<ServiceTask> serviceTasks) {
+        removeDuplicatesAndPlaceInCache(serviceTasks);
+        return sortList();
+    }
 
+    private void removeDuplicatesAndPlaceInCache(List<ServiceTask> serviceTasks) {
         for (int i = 0; i < serviceTasks.size(); i++) {
             ServiceTask serviceTask = serviceTasks.get(i);
             serviceTask.setIndex(i);
@@ -23,10 +27,9 @@ class Sorter {
                 atmIdTasks.put(serviceTask.getAtmId(), serviceTask);
             }
         }
-        return sortList();
     }
 
-    private static void swapIfHigherPriority(ServiceTask serviceTask, Map<Integer, ServiceTask> atmIdTasks) {
+    private void swapIfHigherPriority(ServiceTask serviceTask, Map<Integer, ServiceTask> atmIdTasks) {
         ServiceTask extractedServiceTask = atmIdTasks.get(serviceTask.getAtmId());
         if (extractedServiceTask.getRequestType().compareTo(serviceTask.getRequestType()) > 0) {
             extractedServiceTask.setRequestType(serviceTask.getRequestType());
@@ -36,17 +39,20 @@ class Sorter {
     private List<ServiceTask> sortList() {
         return regionAtmId.stream()
                 .flatMap(x -> x.values().stream()
-                        .sorted(Comparator.comparing(ServiceTask::getRequestType)
+                        .sorted(Comparator.comparing(
+                                ServiceTask::getRequestType,
+                                        new ServiceRequestTypeComparator())
                                 .thenComparing(ServiceTask::getIndex)
                         ))
                 .collect(Collectors.toList());
     }
 
     private Map<Integer, ServiceTask> getRegionAtms(int region) {
-        if (region - 1 > lastRegion) {
+        int regionArrayPosition = region - 1;
+        if (regionArrayPosition > lastRegion) {
             expandListTo(region);
         }
-        return regionAtmId.get(region - 1);
+        return regionAtmId.get(regionArrayPosition);
     }
 
     private void expandListTo(int region) {

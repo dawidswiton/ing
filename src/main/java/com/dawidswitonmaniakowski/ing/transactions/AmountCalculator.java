@@ -26,7 +26,7 @@ class AmountCalculator {
         return account;
     }
 
-    Account accountCreator(String accountNumber) {
+    private Account accountCreator(String accountNumber) {
         Account account = new Account(accountNumber);
         accounts.put(accountNumber, account);
         return account;

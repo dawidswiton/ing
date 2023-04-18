@@ -15,6 +15,7 @@ final class ServiceTask {
     @Setter
     @Min(value = 1, message = "Min value is 1")
     @Max(value = 9999, message = "Max value is 9999")
+    @JsonProperty("region")
     private int region;
 
     private ServiceRequestType requestType;
@@ -23,6 +24,7 @@ final class ServiceTask {
     @Setter
     @Min(value = 1, message = "Min value is 1")
     @Max(value = 9999, message = "Max value is 9999")
+    @JsonProperty("atmId")
     private int atmId;
 
     @Getter
@@ -30,7 +32,7 @@ final class ServiceTask {
     @JsonIgnore
     private int index;
 
-    @JsonProperty
+    @JsonProperty("requestType")
     void setRequestType(ServiceRequestType requestType) {
         this.requestType = requestType;
     }
