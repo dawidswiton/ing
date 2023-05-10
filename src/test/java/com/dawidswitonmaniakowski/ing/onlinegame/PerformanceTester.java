@@ -32,8 +32,8 @@ class PerformanceTester {
                 clans2.add(c);
             }
 
-            GroupCollector collector = new GroupCollector(clans, numOfPlayersMax);
-            List<List<Clan>> lists = collector.executeProcessing();
+            EntranceOrganizerWithAnalyzeBuffer collector = new EntranceOrganizerWithAnalyzeBuffer(clans, numOfPlayersMax);
+            List<List<Clan>> lists = collector.getOrderedGroups();
 
             GroupCollectorCorrect correct = new GroupCollectorCorrect(clans2, numOfPlayersMax);
             List<List<Clan>> expected = correct.executeProcessing();
@@ -62,8 +62,8 @@ class PerformanceTester {
             }
 
             Instant start = Instant.now();
-            GroupCollector collector = new GroupCollector(clans, numOfPlayersMax);
-            collector.executeProcessing();
+            EntranceOrganizerWithAnalyzeBuffer collector = new EntranceOrganizerWithAnalyzeBuffer(clans, numOfPlayersMax);
+            collector.getOrderedGroups();
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
 

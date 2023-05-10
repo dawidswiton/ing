@@ -38,8 +38,8 @@ class PerformanceTesterTest {
 
             Instant start = Instant.now();
             //main execution
-            Sorter sorter = new Sorter();
-            sorter.plan(serviceTasks);
+            OrderSorterImpl sorter = new OrderSorterImpl();
+            sorter.buildPlan(serviceTasks);
 
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
