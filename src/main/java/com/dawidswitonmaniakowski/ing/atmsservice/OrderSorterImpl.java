@@ -3,13 +3,14 @@ package com.dawidswitonmaniakowski.ing.atmsservice;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Sorter {
+class OrderSorterImpl implements OrderSorter {
 
     private final List<Map<Integer, ServiceTask>> regionAtmId = new ArrayList<>();
 
     private int lastRegion = -1;
 
-    List<ServiceTask> plan(List<ServiceTask> serviceTasks) {
+    @Override
+    public List<ServiceTask> buildPlan(List<ServiceTask> serviceTasks) {
         removeDuplicatesAndPlaceInCache(serviceTasks);
         return sortList();
     }

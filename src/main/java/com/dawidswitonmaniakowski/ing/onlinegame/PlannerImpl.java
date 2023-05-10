@@ -9,10 +9,10 @@ class PlannerImpl implements EntrancePlanner {
     @Override
     public List<List<Clan>> plan(Players players) {
 
-        GroupCollector groupCollector = new GroupCollector(
+        EntranceOrganizer entranceOrganizer = new EntranceOrganizerWithAnalyzeBuffer(
                 players.getClans(),
                 players.getGroupCount()
         );
-        return groupCollector.executeProcessing();
+        return entranceOrganizer.getOrderedGroups();
     }
 }
